@@ -2,8 +2,4 @@ pydantic>=2.0.0
 rich>=13.0.0
 questionary>=2.0.0
 streamlit
-hashlib
-datetime
-json
-base64
-time
+# Standard libraries like hashlib, datetime, json, base64, time do NOT go here.
