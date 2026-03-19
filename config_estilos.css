@@ -1,0 +1,214 @@
+/* 
+   Blockchain v9.0 - "The Bitcoin Standard"
+   Design by: Senior Fullstack & Web3 Architect
+   Focus: Exact mempool.space replica, 3D Block boxes, Dual Timeline.
+*/
+
+:root {
+    --bg-dark: #11131f; /* Real mempool.space background */
+    --sidebar-bg: #181b2a;
+    --card-bg: #1c2035;
+    
+    /* Mempool.space Palette */
+    --mempool-purple: #9a49f2;
+    --mined-blue: #4a90e2;
+    --low-fee: #2d333b;
+    --med-fee: #f59e0b;
+    --high-fee: #ef4444;
+    
+    --text-main: #adbac7;
+    --text-bright: #ffffff;
+}
+
+body {
+    background-color: var(--bg-dark);
+    margin: 0; padding: 0;
+    overflow: hidden !important;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+}
+
+/* --- Layout --- */
+.main-renderer {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #11131f;
+}
+
+/* Dual Timeline Container */
+.timeline-container {
+    display: flex;
+    width: 100%;
+    height: 350px;
+    position: relative;
+    border-bottom: 2px solid #2d333b;
+}
+
+/* Central Separator Pillar */
+.separator-pillar {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #2d333b;
+    z-index: 10;
+    transform: translateX(-50%);
+}
+
+.separator-pillar::before {
+    content: '⇌';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #11131f;
+    color: #adbac7;
+    padding: 10px;
+    font-size: 20px;
+}
+
+/* Left: Projected Blocks (Mempool) */
+.mempool-timeline {
+    flex: 1;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding: 0 40px;
+    gap: 30px;
+    overflow-x: hidden;
+}
+
+/* Right: Mined Blocks (Chain) */
+.chain-timeline {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 40px;
+    gap: 30px;
+    overflow-x: auto;
+}
+
+/* --- Block Box Style (3D Aspect) --- */
+.block-box {
+    width: 150px;
+    height: 180px;
+    background: #1c2035;
+    border-radius: 4px;
+    position: relative;
+    padding: 15px;
+    flex-shrink: 0;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.3);
+    transition: all 0.3s;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.block-box::before {
+    content: '';
+    position: absolute;
+    top: -10px; left: 10px;
+    width: 100%; height: 10px;
+    background: #262c45;
+    transform: skewX(-45deg);
+    border-radius: 2px 2px 0 0;
+}
+
+.block-box::after {
+    content: '';
+    position: absolute;
+    top: -5px; left: -10px;
+    width: 10px; height: 100%;
+    background: #161a2b;
+    transform: skewY(-45deg);
+    border-radius: 2px 0 0 2px;
+}
+
+.mempool-block { background: var(--mempool-purple); }
+.mempool-block::before { background: #b16eff; }
+.mempool-block::after { background: #7c26d9; }
+
+.mined-block { background: var(--mined-blue); }
+.mined-block::before { background: #6da5e8; }
+.mined-block::after { background: #2f6cb0; }
+
+/* Content inside boxes */
+.box-header { 
+    font-size: 10px; font-weight: bold; color: rgba(255,255,255,0.7); 
+    margin-bottom: 20px; text-align: center;
+}
+.box-fee { font-size: 12px; color: white; text-align: center; }
+.box-btc { font-size: 16px; font-weight: 900; color: white; margin: 10px 0; text-align: center; }
+.box-stats { font-size: 9px; opacity: 0.8; text-align: center; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;}
+
+/* --- Charts Area (Lower part) --- */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.chart-card {
+    background: #181b2a;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #2d333b;
+}
+
+.chart-title { font-size: 12px; font-weight: bold; margin-bottom: 15px; color: #539bf5; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Goggles Grid */
+.goggles-grid {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    gap: 2px;
+}
+.goggle-pixel { width: 100%; aspect-ratio: 1; background: #21ba45; opacity: 0.4; }
+
+/* --- Sidebar Styling --- */
+[data-testid="stSidebar"] {
+    background-color: var(--sidebar-bg);
+}
+
+.stButton>button {
+    background: #539bf5 !important;
+    border-radius: 4px !important;
+}
+
+/* --- Forensic Attack Visuals --- */
+.hacked-block {
+    outline: 3px solid #ef4444 !important;
+    animation: glitch 0.4s infinite alternate;
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.4) !important;
+}
+
+@keyframes glitch {
+    0% { transform: translate(1px, 0px) skewX(2deg); }
+    33% { transform: translate(-1px, 2px) skewX(-2deg); }
+    66% { transform: translate(2px, -1px) skewX(0deg); }
+    100% { transform: translate(-2px, 1px) skewX(1deg); }
+}
+
+.forensic-box {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    border-radius: 4px;
+    padding: 8px;
+    margin-top: 10px;
+}
+
+/* Tooltips */
+[title] {
+    cursor: help;
+}
+
+/* Animations */
+@keyframes fly-to-right {
+    0% { transform: translateX(0) scale(1.1); opacity: 1; }
+    100% { transform: translateX(50vw) scale(0.5); opacity: 0; }
+}
+.flying { animation: fly-to-right 1s forwards; }
