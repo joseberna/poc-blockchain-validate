@@ -13,11 +13,22 @@ import streamlit.components.v1 as components
 
 # Configuración Maverick v10.6 "The Forensic Gold"
 st.set_page_config(
-    page_title="Blockchain Forensic v10.6", 
+    page_title="Blockchain Maverick v10.6 - Forensic Simulator", 
     page_icon="🛡️", 
     layout="wide", 
     initial_sidebar_state="expanded"
 )
+
+# --- SEO META TAGS (Hack para Previsualización Social) ---
+st.markdown(f"""
+    <head>
+    <meta property="og:title" content="Blockchain Maverick v10.6 - Forensic Simulator" />
+    <meta property="og:description" content="Simulador avanzado de seguridad Blockchain: Mempool interactivo, auditoría forense y Proof of Work en tiempo real." />
+    <meta property="og:image" content="https://raw.githubusercontent.com/joseberna/poc-blockchain-validate/main/preview.png" />
+    <meta property="og:url" content="https://poc-blockchain-validate-blocks.streamlit.app/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    </head>
+""", unsafe_allow_html=True)
 
 # --- LOAD STYLES ---
 def get_css_content(file_name):
